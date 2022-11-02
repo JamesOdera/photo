@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title %}
+    <title>{{title}}</title>
+    {% else %}
+        <title> BLOG </title>
+    {% endif %}
+
+    {% block styles %}
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+        <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+        <!-- ICONSCOUT CDN -->
+        <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+        <!-- GOOGLE FONT -->
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    {% endblock %}
+</head>
+<body>
+    {% include "navbar.html" %}
+
+    {% block content %}{%endblock%}
+
+    {% include "footer.html" %}
+
+    {% block scripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+        <script src="{% static 'js/main.js' %}"></script>
+        <script>
+            $(document).ready(function(event) {
+  
+              $('#delete').click(function () {
+                  return confirm('are You sure?');
+              });
+
+            });
+        </script>
+    {% endblock %}
+</body>
+</html>

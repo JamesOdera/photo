@@ -1,0 +1,92 @@
+{%extends 'home/base.html'%}
+{% load static %}
+
+{% block content %}
+{{block.super}}
+ <!-- Featured -->
+ <section class="featured">
+    {% for image in images %}
+    {% if image.featured %}
+    <div class="container featured__container">
+        <div class="post__thumbnail">
+            <img src="{{image.image.url}}" alt="thumbnail-img" />
+        </div>
+        <div class="post__info">
+            <a href="{% url 'blog' %}?category={{image.category.name}}" class="category__button">{{image.category}}</a>
+            <h2 class="post__title">
+                <a href="{{image.get_absolute_url}}">
+                    {{image.title}}.
+                </a>
+            </h2>
+            <p class="post__body">
+                {{image.description}}
+            </p>
+            <div class="post__author">
+                <div class="post__author-avatar">
+                    {% if image.author.profile.photo %}
+                    <img src="{{ image.author.profile.photo.url }}" alt="profile-img">
+                    {% else %}
+                    <span>{{ image.author.username|slice:":1"| capfirst }}</span>
+                    {% endif %}
+                </div>
+                <div class="post__author-info">
+                    <h5>By: {{image.author}}</h5>
+                    <small>{{image.pub_date}}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</section>
+<!-- END Featured -->
+
+<!-- POSTS -->
+<section class="posts">
+    <div class="container posts__container">
+        {% for image in images %}
+        <article class="post">
+            <div class="post__thumbnail">
+                <img src="{{image.image.url}}" alt="profile-img" />
+            </div>
+            <div class="post__info">
+                <a href="{% url 'blog' %}?category={{image.category.name}}" class="category__button">{{image.category}}</a>
+                <h2 class="post__title">
+                    <a href="{{image.get_absolute_url}}">
+                        {{image.title|truncatechars:25}}
+                    </a>
+                </h2>
+                <p class="post__body">
+                    {{image.description|truncatechars:200}}
+                </p>
+                <div class="post__author">
+                    <div class="post__author-avatar">
+                        {% if image.author.profile.photo %}
+                        <img src="{{ image.author.profile.photo.url }}" alt="profile-img">
+                        {% else %}
+                        <span>{{ image.author.username|slice:":1"| capfirst }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="post__author-info">
+                        <h5>By: {{image.author}}</h5>
+                        <!-- <small>October 10, 2022 - 07:23</small> -->
+                        <small>{{image.pub_date}}</small>
+                    </div>
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+<!-- END POSTS -->
+
+<section class="category__buttons">
+    <div class="container category__buttons-container">
+        <a href="{% url 'blog' %}" class="category__button">All</a>
+        {% for category in categories %}
+        <a href="{% url 'blog' %}?category={{category.name}}" class="category__button">{{ category.name }}</a>
+        {% endfor %}
+    </div>
+</section>
+<!-- END CATEGORY BUTTONS -->
+{% endblock %}

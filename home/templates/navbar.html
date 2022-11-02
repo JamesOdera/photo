@@ -1,0 +1,39 @@
+{% load static %}
+<!-- NAV -->
+<nav>
+    <div class="container nav__container">
+        <a href="{% url 'index' %}" class="nav__logo">Photo</a>
+        <ul class="nav__items">
+            <li><a href="{% url 'blog' %}">Blog</a></li>
+            <!-- <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="contact.html">Contact</a></li> -->
+            
+            {% if request.user.is_authenticated %}
+            <li class="nav__profile">
+                <div class="avatar">
+                    {% if request.user.profile.photo %}
+                    <img src="{{ request.user.profile.photo.url }}" alt="Profile">
+                    {% else %}
+                    <span>{{ request.user.username|slice:":1"| capfirst }}</span>
+                    {% endif%}
+                </div>
+                <ul>
+                    <li><a href="{% url 'dashboard' request.user.profile.id %}">Dashboard</a></li>
+                    <li><a href="{% url 'user_logout' %}">Logout</a></li>
+                </ul>
+            </li>
+            {% else %}
+            <li><a href="{% url 'signin' %}">Signin</a></li>
+            {% endif %}
+        </ul>
+        <!--  -->
+        <button id="open__nav-btn">
+            <i class="uil uil-bars"></i>
+        </button>
+        <button id="close__nav-btn">
+            <i class="uil uil-multiply"></i>
+        </button>
+    </div>
+</nav>
+<!-- END NAV -->

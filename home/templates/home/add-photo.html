@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{%extends 'home/base.html'%}
+{% load static %}
+
+{% block content %}
+{{block.super}}
+    
+<section class="form__section">
+    <div class="container form__section-container">
+        <h2>Add Post</h2>
+        <!-- <div class="alert__message error">
+            <p>This is an error message</p>
+        </div> -->
+        <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input name="title" type="text" placeholder="Title" >
+            <select name="category" class="select">
+                <option value="none">Select Category</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="category_new" placeholder="Add a New Category" >
+            <textarea name="description" rows="10" placeholder="Description"></textarea>
+            <div class="form__control">
+                <input type="file" name="image" id="thumbnail">
+                <label for="thumbnail">Add Thumbnail</label>
+            </div>
+            <button type="submit" class="btn">Add Post</button>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

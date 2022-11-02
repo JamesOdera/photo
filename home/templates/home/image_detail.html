@@ -1,0 +1,34 @@
+{%extends 'home/base.html'%}
+{% load static %}
+
+{% block content %}
+{{block.super}}
+
+<section class="singlepost">
+    <div class="container singlepost__container">
+        <h2>
+            {{image.title}}.
+        </h2>
+        <div class="post__author">
+            <div class="post__author-avatar">
+                {% if image.author.profile.photo %}
+                <img src="{{ image.author.profile.photo.url }}" alt="profile-img">
+                {% else %}
+                <span>{{ image.author.username|slice:":1"| capfirst }}</span>
+                {% endif %}
+            </div>
+            <div class="post__author-info">
+                <h5>By: {{image.author}}</h5>
+                <small>{{image.pub_date}}</small>
+            </div>
+        </div>
+        <div class="singlepost__thumbnail">
+            <img src="{{image.image.url}}" />
+        </div>
+        <p>
+            {{image.description}}
+        </p>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,92 @@
+{%extends 'home/base.html'%}
+{% load static %}
+
+{% block content %}
+{{block.super}}
+
+<section class="dashboard">
+    <div class="container dashboard__container">
+        <button id="show__sidebar-btn" class="sidebar__toggle">
+            <i class="uil uil-angle-right-b"></i>
+        </button>
+        <button id="hide__sidebar-btn" class="sidebar__toggle">
+            <i class="uil uil-angle-left-b"></i>
+        </button>
+        <aside>
+            <ul>
+                <li>
+                    <a href="{% url 'add-photo' %}">
+                        <i class="uil uil-pen"></i>
+                        <h5>Add Post</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'dashboard' request.user.profile.id %}">
+                        <i class="uil uil-postcard"></i>
+                        <h5>Manage Posts</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'profile_info' request.user.profile.id %}"  class="active">
+                        <i class="uil uil-notes"></i>
+                        <h5>Profile Info</h5>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'edit_profile' %}">
+                        <i class="uil uil-edit"></i>
+                        <h5>Edit Profile</h5>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        <main>
+            <header>
+                <h2>Profile Information</h2>
+                <div class="avatar">
+                    {% if request.user.profile.photo %}
+                    <img src="{{ request.user.profile.photo.url }}" alt="Profile">
+                    {% else %}
+                    <span>{{ profile.user.username|slice:":1"| capfirst }}</span>
+                    {% endif%}
+                </div>
+            </header>
+            <article>
+                <div class="info">
+                    {% if profile.user %}
+                    <a class="user__profile">
+                        <div class="handle">
+                            <h4>{{profile.user.username}}</h4>
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% if profile.birth_date %}
+                    <a class="user__profile">
+                        <div class="handle">
+                            <h4>{{profile.birth_date}}</h4>
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% if profile.location %}
+                    <a class="user__profile">
+                        <div class="handle">
+                            <h4>{{profile.location}}</h4>
+                        </div>
+                    </a>
+                    {% endif %}
+                </div>
+                <div class="bio">
+                    {% if profile.bio %}
+                    <a class="user__profile">
+                        <div class="handle">
+                            <h4>{{profile.bio}}</h4>
+                        </div>
+                    </a>
+                    {% endif %}
+                </div>
+            </article>
+        </main>
+    </div>
+</section>
+
+{% endblock %}

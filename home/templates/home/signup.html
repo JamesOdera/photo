@@ -1,0 +1,22 @@
+{%extends 'home/base.html'%}
+{% load static %}
+
+{% block content %}
+{{block.super}}
+    
+<section class="form__section">
+    <div class="container form__section-container">
+        <h2>Sign Up</h2>
+        <!-- <div class="alert__message error">
+            <p>This is an error message</p>
+        </div> -->
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn">Register</button>
+            <small>Already have an account? <a href="{% url 'signin' %}">Sign In</a></small>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{%extends 'home/base.html'%}
+{% load static %}
+
+{% block content %}
+{{block.super}}
+    
+<section class="form__section">
+    <div class="container form__section-container">
+        <h2>Edit Post</h2>
+        <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit" class="btn">Update Post</button>
+        </form>
+    </div>
+</section>
+
+{% endblock %}

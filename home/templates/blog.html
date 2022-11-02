@@ -1,0 +1,75 @@
+{%extends 'home/base.html'%}
+{% load static %}
+
+{% block content %}
+{{block.super}}
+<!-- SEARCH BAR -->
+<section class="search__bar">
+    <form class="container search__bar-container">
+        <div>
+            <i class="uil uil-search"></i>
+            <input type="search" name="q" placeholder="Search" />
+        </div>
+        <button type="submit" class="btn">Go</button>
+    </form>
+</section>
+<!-- END SEARCH BAR -->
+
+<!-- POSTS -->
+<section class="posts">
+    <div class="container posts__container">
+        {% for image in images %}
+        <article class="post">
+            <div class="post__thumbnail">
+                <img src="{{image.image.url}}" alt="profile-img" />
+            </div>
+            <div class="post__info">
+                <a href="{% url 'blog' %}?category={{image.category.name}}" class="category__button">{{image.category}}</a>
+                <h2 class="post__title">
+                    <a href="{{image.get_absolute_url}}">
+                        {{image.title|truncatechars:25}}
+                    </a>
+                </h2>
+                <p class="post__body">
+                    {{image.description|truncatechars:200}}
+                </p>
+                <div class="post__author">
+                    <div class="post__author-avatar">
+                        {% if image.author.profile.photo %}
+                        <img src="{{ image.author.profile.photo.url }}" alt="profile-img">
+                        {% else %}
+                        <span>{{ image.author.username|slice:":1"| capfirst }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="post__author-info">
+                        <h5>By: Iris West</h5>
+                        <small>{{image.pub_date}}</small>
+                    </div>
+                </div>
+            </div>
+        </article>
+        {% empty %}
+        <article class="post">
+            <!-- <div class="post__thumbnail">
+                <img src="{{image.image.url}}" alt="profile-img" />
+            </div> -->
+            <div class="empty__post">
+                <h1> "{{ request.GET.q }}" Does Not Exist </h1>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+<!-- END POSTS -->
+
+<section class="category__buttons">
+    <div class="container category__buttons-container">
+        <a href="{% url 'blog' %}" class="category__button">All</a>
+        {% for category in categories %}
+        <a href="{% url 'blog' %}?category={{category.name}}" class="category__button">{{ category.name }}</a>
+        {% endfor %}
+    </div>
+</section>
+<!-- END CATEGORY BUTTONS -->
+{% endblock %}
+    
